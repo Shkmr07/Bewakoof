@@ -7,8 +7,10 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, index: true },
   password: { type: String, required: true },
   phone: { type: String, required: true },
+  dob: { type: Date },
+  gender: { type: String, enum: ["Male", "Female", "Other"] },
   role: { type: String, enum: ["Admin", "User"], default: "User" },
-});
+},{versionKey : false, timestamps : true});
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

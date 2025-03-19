@@ -12,10 +12,12 @@ const auth = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
 
-    const isBlacklist = await Blacklist.findOne({token})
+    const isBlacklist = await Blacklist.findOne({ token });
 
-    if(isBlacklist){
-      return res.status(401).json({message : "Token has been blacklisted. Please log in again."})
+    if (isBlacklist) {
+      return res
+        .status(401)
+        .json({ message: "Token has been blacklisted. Please log in again." });
     }
 
     const decode = jwt.verify(token, process.env.SECRET_KEY);
