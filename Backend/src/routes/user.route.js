@@ -1,5 +1,5 @@
 const express = require("express")
-const { register, login, refreshToken } = require("../controllers/user.controller")
+const { register, login, refreshToken, logout, profile } = require("../controllers/user.controller")
 const auth = require("../middlewares/auth.middleware")
 const access = require("../middlewares/access.middleware")
 
@@ -7,7 +7,9 @@ const userRoute = express.Router()
 
 userRoute.post("/register",register)
 userRoute.post("/login",login)
-userRoute.get("/refreshToken",auth,access("Admin","User"),refreshToken)
+userRoute.post("/refresh-token",refreshToken)
+userRoute.post("/logout",auth,logout)
+userRoute.get("profile",auth,profile)
 
 
 module.exports = userRoute

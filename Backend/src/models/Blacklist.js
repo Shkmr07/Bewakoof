@@ -6,7 +6,7 @@ const BlacklistSchema = new mongoose.Schema(
     expireAt: {
       type: Date,
       default: Date.now,
-      expires: 1 * 24 * 60 * 60,
+      expires: process.env.BLACKLIST_TOKEN,
       index: true,
     },
   },
