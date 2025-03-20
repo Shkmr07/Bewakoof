@@ -1,14 +1,38 @@
-const express = require("express")
-const auth = require("../middlewares/auth.middleware")
-const access = require("../middlewares/access.middleware")
-const addProduct = require("../controllers/product.controller")
-const multer = require("multer")
+const express = require("express");
+const auth = require("../middlewares/auth.middleware");
+const access = require("../middlewares/access.middleware");
+const {
+  addProduct,
+  getProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/product.controller");
+const multer = require("multer");
 
-const productRoute = express.Router()
+const storage = multer.memoryStorage();
 
+const upload = multer({ storage });
 
-productRoute.post("/add-product",auth,access("Admin"),addProduct)
+const productRoute = express.Router();
 
+productRoute.post(
+  "/add-product",
+  auth,
+  access("Admin"),
+  upload.array("photo", 5),
+  addProduct
+);
 
+productRoute.get("/", getProducts);
+productRoute.get("/:id", auth, access("Admin"), getProductById);
+productRoute.put(
+  "/update/:id",
+  auth,
+  access("Admin"),
+  upload.array("photo", 5),
+  updateProduct
+);
+productRoute.put("/delete/:id", auth, access("Admin"), deleteProduct);
 
-module.exports = productRoute
+module.exports = productRoute;
