@@ -28,7 +28,10 @@ export default function Navbar() {
 
         <ul className="flex items-center gap-4 flex-1/2">
           {["MEN", "WOMEN", "MOBILE COVER"].map((item, idx) => (
-            <li key={idx} className="text-sm font-semibold cursor-pointer tracking-wide">
+            <li
+              key={idx}
+              className="text-sm font-semibold cursor-pointer tracking-wide"
+            >
               {item}
             </li>
           ))}
@@ -52,13 +55,13 @@ export default function Navbar() {
 
       {modal && (
         <div
-          className={`absolute top-0 left-0 w-[90%] rounded-r-2xl px-5 flex flex-col gap-4 min-h-screen bg-white shadow-lg transition-transform duration-500 ${
+          className={`absolute top-0 left-0 w-[90%] rounded-r-2xl p-5 flex flex-col gap-4 min-h-screen bg-white shadow-lg transition-transform duration-500 ${
             modal ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* User Profile Section */}
 
-          <div className="flex items-center justify-between pt-3">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="bg-slate-300 rounded-full p-1">
                 <CiUser className="text-3xl" />
@@ -83,31 +86,21 @@ export default function Navbar() {
               </span>
               <div className="flex-1 border-t border-gray-100"></div>
             </div>
+
             <div className="mt-5 flex flex-col gap-5">
-              <div className="flex items-center space-x-4">
-                <div className="bg-slate-300 p-1 rounded-full">
-                  <FcBusinessman className="text-4xl" />
+              {[
+                { svg: <FcBusinessman />, name: "Men" },
+                { svg: <FcBusinesswoman />, name: "Women" },
+                { svg: <GiSonicShoes />, name: "Accessories" },
+                { svg: <IoSnow />, name: "Winter" },
+              ].map((item, idx) => (
+                <div className="flex items-center space-x-4">
+                  <div className="bg-slate-300 p-1 rounded-full">
+                    {React.cloneElement(item.svg, { className: "text-4xl" })}
+                  </div>
+                  <p className="tracking-wider text-gray-500">{item.name}</p>
                 </div>
-                <p className="tracking-wider text-gray-500">Men</p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="bg-slate-300 p-1 rounded-full">
-                  <FcBusinesswoman className="text-4xl" />
-                </div>
-                <p className="tracking-wider text-gray-500">Women</p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="bg-slate-300 p-1 rounded-full">
-                  <GiSonicShoes className="text-4xl" />
-                </div>
-                <p className="tracking-wider text-gray-500">Accessories</p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="bg-slate-300 p-1 rounded-full">
-                  <IoSnow className="text-4xl" />
-                </div>
-                <p className="tracking-wider text-gray-500">Winter</p>
-              </div>
+              ))}
             </div>
           </div>
 
