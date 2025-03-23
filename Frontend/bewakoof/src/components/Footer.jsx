@@ -1,7 +1,12 @@
 import React from 'react'
+import logo from "@/assets/logo.svg"
 
 export default function Footer() {
   return (
-    <div>Footer</div>
+    <footer>
+      <div>
+        <img src={logo} alt="Bewakoof Logo" />
+      </div>
+    </footer>
   )
 }
