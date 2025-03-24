@@ -4,9 +4,9 @@ function App() {
   
 
   return (
-    <>
+    <div className="max-w-[1600px] m-auto">
       <Homepage />
-    </>
+    </div>
   )
 }
 
