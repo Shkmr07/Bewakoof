@@ -8,6 +8,6 @@ const cartSchema = new mongoose.Schema({
       quantity: { type: Number, required: true, min: 1 },
     },
   ],
-}, { timestamps: true });
+}, { versionKey : false, timestamps: true });
 
 module.exports = mongoose.model("Cart", cartSchema);
