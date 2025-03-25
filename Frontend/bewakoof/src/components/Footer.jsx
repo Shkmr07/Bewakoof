@@ -2,6 +2,7 @@ import React from "react";
 import bewakoof from "@/assets/bewakoof.svg";
 import Play from "@/assets/gp.webp";
 import App from "@/assets/AppStore.webp";
+import { NavLink } from "react-router-dom";
 
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import { FiTruck } from "react-icons/fi";

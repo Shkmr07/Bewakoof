@@ -12,6 +12,7 @@ import { MdClose } from "react-icons/md";
 import { FcBusinessman, FcBusinesswoman } from "react-icons/fc";
 import { GiSonicShoes } from "react-icons/gi";
 import { IoSnow, IoWallet } from "react-icons/io5";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,6 +25,7 @@ import {
 
 export default function Navbar() {
   const [modal, setModal] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (modal) {
@@ -39,7 +41,7 @@ export default function Navbar() {
       {/* Desktop View */}
       <div className="hidden lg:flex lg:justify-center lg:items-center lg:gap-35 shadow-lg  lg:py-3">
         <div className="flex items-center gap-2">
-          <div className="w-[160px] flex-shrink-0 cursor-pointer">
+          <div className="w-[160px] flex-shrink-0 cursor-pointer" onClick={()=>navigate("/")}>
             <img className="w-full" src={logo} alt="Bewakoof Logo" />
           </div>
           {[
@@ -117,7 +119,7 @@ export default function Navbar() {
 
           <div className="w-0.5 h-4 bg-slate-300"></div>
           <div className="flex items-center gap-4 cursor-pointer ">
-            <p className="text-sm font-semibold tracking-wide">LOGIN</p>
+            <NavLink to="/login" className="text-sm font-semibold tracking-wide">LOGIN</NavLink>
             <CiHeart className="text-2xl" />
             <BsBag className="text-xl" />
           </div>
