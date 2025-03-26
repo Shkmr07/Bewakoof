@@ -2,11 +2,13 @@ const express = require("express");
 const connectDB = require("./config");
 const cookieParser = require("cookie-parser");
 const routes = require("./src/routes/combine.route");
+const cors = require('cors')
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", routes);
