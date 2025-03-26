@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
 
+
 export const login = createAsyncThunk(
   "auth/login",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await api.post("/login", userData);
+      const res = await api.post("/users/login", userData);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Something Went Wrong");

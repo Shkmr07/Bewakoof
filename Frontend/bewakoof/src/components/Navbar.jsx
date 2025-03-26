@@ -25,7 +25,7 @@ import {
 
 export default function Navbar() {
   const [modal, setModal] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (modal) {
@@ -41,7 +41,10 @@ export default function Navbar() {
       {/* Desktop View */}
       <div className="hidden lg:flex lg:justify-center lg:items-center lg:gap-35 shadow-lg  lg:py-3">
         <div className="flex items-center gap-2">
-          <div className="w-[160px] flex-shrink-0 cursor-pointer" onClick={()=>navigate("/")}>
+          <div
+            className="w-[160px] flex-shrink-0 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <img className="w-full" src={logo} alt="Bewakoof Logo" />
           </div>
           {[
@@ -85,10 +88,10 @@ export default function Navbar() {
               ],
             },
           ].map((sections, idx) => (
-            <NavigationMenu>
+            <NavigationMenu key={idx}>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="cursor-pointer" key={idx}>
+                  <NavigationMenuTrigger className="cursor-pointer">
                     {sections.title}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -119,7 +122,12 @@ export default function Navbar() {
 
           <div className="w-0.5 h-4 bg-slate-300"></div>
           <div className="flex items-center gap-4 cursor-pointer ">
-            <NavLink to="/login" className="text-sm font-semibold tracking-wide">LOGIN</NavLink>
+            <NavLink
+              to="/login"
+              className="text-sm font-semibold tracking-wide"
+            >
+              LOGIN
+            </NavLink>
             <CiHeart className="text-2xl" />
             <BsBag className="text-xl" />
           </div>

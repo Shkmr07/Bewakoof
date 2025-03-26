@@ -9,7 +9,7 @@ const store = configureStore({
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    getDefaultMiddleware().concat(logger);
+    return getDefaultMiddleware().concat(logger);
   },
 });
 

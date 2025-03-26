@@ -6,7 +6,7 @@ export const register = createAsyncThunk(
   "signup/register",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await api.post("/register", userData);
+      const res = await api.post("/users/register", userData);
       return res.data.message;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Something Went Wrong");
