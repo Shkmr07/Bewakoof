@@ -44,7 +44,7 @@ const login = async (req, res) => {
       expiresIn: process.env.REFRESH_TOKEN,
     });
 
-    res.cookie("RefreshToken", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: Number(process.env.MAX_AGE),
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
