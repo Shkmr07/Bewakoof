@@ -47,7 +47,7 @@ const login = async (req, res) => {
     res.cookie("RefreshToken", refreshToken, {
       httpOnly: true,
       maxAge: Number(process.env.MAX_AGE),
-      sameSite: "none",
+      sameSite: "None",
       secure: process.env.NODE_ENV === "production",
     });
 
