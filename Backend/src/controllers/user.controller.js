@@ -58,7 +58,6 @@ const login = async (req, res) => {
 };
 
 const refreshToken = async (req, res) => {
-  console.log(req)
   const isRefreshToken = req.cookies?.RefreshToken;
   if (!isRefreshToken) {
     return res.status(401).json({ message: "❌ Login Required" });
