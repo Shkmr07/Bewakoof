@@ -14,6 +14,25 @@ export const login = createAsyncThunk(
   }
 );
 
+
+export const refreshToken = createAsyncThunk(
+  "auth/refreshToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.post(
+        "users/refresh-token",
+        {},
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Something Went Wrong"
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -36,7 +55,25 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+
+      // For Refresh Token
+
+      .addCase(refreshToken.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.accessToken = action.payload?.accessToken || null;
+        state.isAuth = !!action.payload?.accessToken;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.status = "failed";
+        state.accessToken = null;
+        state.isAuth = false;
+        state.error = action.payload;
       });
+
   },
 });
 

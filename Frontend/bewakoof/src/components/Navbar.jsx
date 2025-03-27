@@ -22,10 +22,13 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [modal, setModal] = useState(false);
+  const {isAuth} = useSelector(state=>state.auth)
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (modal) {
@@ -113,21 +116,72 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
           <Input
             type="email"
             placeholder="Search"
-            className=" w-50 bg-slate-200"
+            className=" mr-3 w-50 bg-slate-200"
           />
 
           <div className="w-0.5 h-4 bg-slate-300"></div>
-          <div className="flex items-center gap-4 cursor-pointer ">
-            <NavLink
-              to="/login"
-              className="text-sm font-semibold tracking-wide"
-            >
-              LOGIN
-            </NavLink>
+          <div className="flex items-center gap-2.5 cursor-pointer ">
+            
+          {isAuth ? (
+                <NavigationMenu>
+                    <NavigationMenuList>
+                        <NavigationMenuItem>
+                            <NavigationMenuTrigger>
+                                <CiUser className="text-xl" />
+                            </NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <div className="bg-white shadow rounded italic p-2 w-40">
+                                <NavLink
+                                    to="/profile"
+                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                                >
+                                    My Account
+                                </NavLink>
+                                <NavLink
+                                    to="/dashboard"
+                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                                >
+                                    My Wishlist
+                                </NavLink>
+                                <NavLink
+                                    to="/logout"
+                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                                >
+                                    My Orders
+                                </NavLink>
+                                <NavLink
+                                    to="/logout"
+                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                                >
+                                    My Wallet
+                                </NavLink>
+                                <NavLink
+                                    to="/logout"
+                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                                >
+                                    Logout
+                                </NavLink>
+                                </div>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                    </NavigationMenuList>
+                </NavigationMenu>
+            ) : (
+                <NavLink
+                    to="/login"
+                    className="text-sm font-semibold tracking-wide ml-2"
+                >
+                    LOGIN
+                </NavLink>
+            )}
+
+
+
+
             <CiHeart className="text-2xl" />
             <BsBag className="text-xl" />
           </div>

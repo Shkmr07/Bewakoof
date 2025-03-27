@@ -105,7 +105,7 @@ const refreshToken = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const accessToken = req.headers.authorization?.split(" ")[1]; // Safe split
-    const refreshToken = req.cookies?.RefreshToken; // Safe access
+    const refreshToken = req.cookies?.refreshToken; // Safe access
 
     if (!accessToken || !refreshToken) {
       return res.status(400).json({ message: "❌ Tokens are missing" });
