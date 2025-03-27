@@ -48,8 +48,9 @@ const login = async (req, res) => {
       httpOnly: true,
       maxAge: Number(process.env.MAX_AGE),
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      secure: process.env.NODE_ENV === "production",
-    });
+      secure: process.env.NODE_ENV === "production" ? true : false,
+  });
+  
 
     res.status(200).json({ message: "✅ Login Successful", accessToken });
   } catch (err) {
@@ -58,7 +59,7 @@ const login = async (req, res) => {
 };
 
 const refreshToken = async (req, res) => {
-  const isRefreshToken = req.cookies?.RefreshToken;
+  const isRefreshToken = req.cookies?.refreshToken;
   if (!isRefreshToken) {
     return res.status(401).json({ message: "❌ Login Required" });
   }
