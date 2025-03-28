@@ -1,18 +1,27 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import React from "react";
+import { getProduct } from "@/redux/reducers/productSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 export default function Homepage() {
+
+  const dispatch = useDispatch()
+  const products = useSelector(state=>state.product.data)
+  const isLoading = useSelector(state=>state.product.status)
+
+  useEffect(()=>{
+    dispatch(getProduct())
+  },[dispatch])
+
+
   return (
     <div>
       <Navbar />
-        <div className="">
-          <p>fkdfdkfd</p>
-          <img src="https://images.bewakoof.com/uploads/grid/app/SC-mickey-women-1738591845.jpg" alt="" />
-          <p>dfkfkdfjdkfjd</p>
-          <p>dfkfkdfjdkfjd</p>
-          <p>dfkfkdfjdkfjd</p>
-        </div>
+        <main>
+
+        </main>
       <Footer />
     </div>
   );

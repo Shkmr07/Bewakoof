@@ -33,36 +33,20 @@ function reducer(state, action) {
 export default function LoginPage() {
   const [isSignup, setIsSignup] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    status: authStatus,
-    isAuth,
-    error: authError,
-  } = useSelector((state) => state.auth);
-  const { status: signupStatus, error: signupError } = useSelector(
-    (state) => state.signup
-  );
+  // const {
+  //   status: authStatus,
+  //   isAuth,
+  //   error: authError,
+  // } = useSelector((state) => state.auth);
+  // const { status: signupStatus, error: signupError } = useSelector(
+  //   (state) => state.signup
+  // );
+  const authStatus = useSelector((state) => state.auth.status);
+  const signupStatus = useSelector((state) => state.signup.status);
+
   const navigate = useNavigate();
 
   const store_dispatch = useDispatch();
-
-  useEffect(() => {
-    if (authStatus === "succeeded" && isAuth) {
-      toast.success("Login successful!");
-      dispatch({ type: "RESET" });
-      navigate("/"); // ✅ Redirect AFTER success
-    }
-    if (signupStatus === "succeeded") {
-      toast.success("Signup successful!");
-      dispatch({ type: "RESET" });
-      setIsSignup(false);
-    }
-    if (authStatus === "failed" && authError) {
-      toast.error(authError);
-    }
-    if (signupStatus === "failed" && signupError) {
-      toast.error(signupError);
-    }
-  }, [authStatus, isAuth, signupStatus]);
 
   const handleChange = (e) => {
     dispatch({
@@ -82,7 +66,16 @@ export default function LoginPage() {
       return;
     }
 
-    store_dispatch(login({ email, password }));
+    store_dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
+        dispatch({ type: "RESET" });
+        toast.success("Login successful!");
+        navigate("/"); // ✅ Redirect AFTER success
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   return (
@@ -140,7 +133,16 @@ export default function LoginPage() {
                   return;
                 }
 
-                store_dispatch(register(state));
+                store_dispatch(register(state))
+                  .unwrap()
+                  .then(() => {
+                    toast.success("Signup successful!");
+                    dispatch({ type: "RESET" });
+                    setIsSignup(false);
+                  })
+                  .catch((error) => {
+                    toast.error(error);
+                  });
               }}
             >
               <input

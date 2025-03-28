@@ -1,6 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
 
+export const getProduct = createAsyncThunk(
+  "product/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/products");
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Error not getting products"
+      );
+    }
+  }
+);
+
 export const createProduct = createAsyncThunk(
   "product/create",
   async (productData, { rejectWithValue, getState }) => {
@@ -46,6 +60,20 @@ const productSlice = createSlice({
         state.data.push(action.payload?.product || {});
       })
       .addCase(createProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+
+      // getting the product details
+      .addCase(getProduct.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.data = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
