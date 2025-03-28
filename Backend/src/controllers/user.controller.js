@@ -147,7 +147,7 @@ const profile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  const { firstName, lastName, dob, gender } = req.body;
+  const { firstName, lastName, phone, dob, gender } = req.body;
 
   try {
     // Ensure there is at least one field to update
@@ -160,14 +160,14 @@ const updateProfile = async (req, res) => {
     // Update user and return the updated document
     const updatedUser = await User.findByIdAndUpdate(
       req.user.userId,
-      { firstName, lastName, dob, gender },
+      { firstName, lastName, dob, phone, gender },
       { new: true, runValidators: true } // Ensures updated fields follow schema validation
     );
 
     if (!updatedUser) {
       return res.status(404).json({ message: "❌ User not found" });
     }
-
+  
     res
       .status(200)
       .json({ message: "✅ Profile Update Successful", user: updatedUser });
