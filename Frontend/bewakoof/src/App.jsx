@@ -3,12 +3,15 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import { Toaster } from "sonner";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshToken } from "./redux/reducers/authSlice";
+import Profilepage from "./pages/Profilepage";
+import Addproduct from "./pages/Addproduct";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isAuth } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(refreshToken())
@@ -24,6 +27,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<Profilepage />} />
+        <Route path="/add-product" element={<Addproduct />} />
+
       </Routes>
     </div>
   );

@@ -13,6 +13,8 @@ import { FcBusinessman, FcBusinesswoman } from "react-icons/fc";
 import { GiSonicShoes } from "react-icons/gi";
 import { IoSnow, IoWallet } from "react-icons/io5";
 import { NavLink, useNavigate } from "react-router-dom";
+import { clearUserProfile, fetchUserProfile } from "@/redux/reducers/userSlice";
+import { Loader } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,13 +24,39 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/reducers/authSlice";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [modal, setModal] = useState(false);
-  const {isAuth} = useSelector(state=>state.auth)
+  const { isAuth } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user.data);
+
+  function handlelogout() {
+    setLoading(true);
+    dispatch(logout())
+      .unwrap()
+      .then(() =>{
+        dispatch(clearUserProfile())
+        toast.success("Logout Successful")
+      })
+      .catch((error) => {
+        // Handle logout error here (e.g., display an error toast)
+        toast.error("Logout Failed");
+        console.error("Logout error:", error);
+      })
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    if (isAuth && !user) {
+      dispatch(fetchUserProfile());
+    }
+  }, [dispatch, isAuth, user]);
 
   useEffect(() => {
     if (modal) {
@@ -125,62 +153,74 @@ export default function Navbar() {
 
           <div className="w-0.5 h-4 bg-slate-300"></div>
           <div className="flex items-center gap-2.5 cursor-pointer ">
-            
-          {isAuth ? (
-                <NavigationMenu>
-                    <NavigationMenuList>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>
-                                <CiUser className="text-xl" />
-                            </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <div className="bg-white shadow rounded italic p-2 w-40">
-                                <NavLink
-                                    to="/profile"
-                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                                >
-                                    My Account
-                                </NavLink>
-                                <NavLink
-                                    to="/dashboard"
-                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                                >
-                                    My Wishlist
-                                </NavLink>
-                                <NavLink
-                                    to="/logout"
-                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                                >
-                                    My Orders
-                                </NavLink>
-                                <NavLink
-                                    to="/logout"
-                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                                >
-                                    My Wallet
-                                </NavLink>
-                                <NavLink
-                                    to="/logout"
-                                    className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                                >
-                                    Logout
-                                </NavLink>
-                                </div>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
+            {isAuth ? (
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>
+                      <CiUser className="text-xl" />
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="bg-white shadow rounded italic p-2 w-40">
+                        {isAuth && (
+                          <div className="block px-2 py-1 text-sm hover:bg-gray-100 rounded">
+                            <span>Hi, {user?.firstName.split(" ")[0]}</span>
+                          </div>
+                        )}
+                        <NavLink
+                          to="/profile"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          My Account
+                        </NavLink>
+                        <NavLink
+                          to="/dashboard"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          My Wishlist
+                        </NavLink>
+                        <NavLink
+                          to="/logout"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          My Orders
+                        </NavLink>
+                        <NavLink
+                          to="/logout"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          My Wallet
+                        </NavLink>
+                        {isAuth && user?.role === "Admin" && <NavLink
+                          to="/add-product"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          Add Product
+                        </NavLink>}
+                        <NavLink
+                          to="/"
+                          className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                          onClick={handlelogout}
+                        >
+                          {loading ? (
+                            <Loader className="w-4 h-4 animate-spin" />
+                          ) : (
+                            "Logout"
+                          )}
+                        </NavLink>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             ) : (
-                <NavLink
-                    to="/login"
-                    className="text-sm font-semibold tracking-wide ml-2"
-                >
-                    LOGIN
-                </NavLink>
+              <NavLink
+                to="/login"
+                className="text-sm font-semibold tracking-wide ml-2"
+              >
+                LOGIN
+              </NavLink>
             )}
-
-
-
 
             <CiHeart className="text-2xl" />
             <BsBag className="text-xl" />

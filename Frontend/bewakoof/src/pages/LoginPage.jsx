@@ -249,7 +249,7 @@ export default function LoginPage() {
               />
               <input
                 type="submit"
-                value={authStatus === "loading" ? "...Loading" : "Submit"}
+                value={authStatus === "loading" ? "Loading..." : "Submit"}
                 disabled={authStatus === "loading"}
                 className="py-3 cursor-pointer font-semibold hover:text-white rounded-lg bg-slate-300 hover:bg-green-500"
               />
