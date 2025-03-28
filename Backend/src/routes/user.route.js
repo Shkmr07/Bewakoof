@@ -17,7 +17,7 @@ userRoute.post("/register", register);
 userRoute.post("/login", login);
 userRoute.post("/refresh-token", refreshToken);
 userRoute.post("/logout", auth, logout);
-userRoute.get("profile", auth, profile);
+userRoute.get("/profile", auth, profile);
 userRoute.patch("/update-profile", auth, updateProfile);
 userRoute.delete("delete/:id", auth, access("Admin"), deleteProfile);
 
