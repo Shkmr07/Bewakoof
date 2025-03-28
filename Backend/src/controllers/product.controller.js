@@ -7,7 +7,7 @@ const addProduct = async (req, res) => {
       return res.status(400).json({ message: "No files uploaded" });
     }
 
-    // Upload images to Cloudinary
+    // Upload images to Cloudinary async 
     const imageUrls = await Promise.all(
       req.files.map((file) => {
         return new Promise((resolve, reject) => {
