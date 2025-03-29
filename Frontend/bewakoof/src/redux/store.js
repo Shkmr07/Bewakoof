@@ -3,10 +3,7 @@ import signupReducer from "./reducers/signupSlice";
 import authReducer from "./reducers/authSlice";
 import userReducer from "./reducers/userSlice";
 import productReducer from "./reducers/productSlice";
-import cartReducer from "./reducers/cartSlice"
-
-
-import logger from "redux-logger";
+import cartReducer from "./reducers/cartSlic
 
 const store = configureStore({
   reducer: {
@@ -16,9 +13,7 @@ const store = configureStore({
     product : productReducer,
     cart : cartReducer,
   },
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(logger);
-  },
+  
 });
 
 export default store;
