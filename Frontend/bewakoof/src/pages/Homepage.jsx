@@ -15,9 +15,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { div } from "framer-motion/client";
 import ImageCard from "@/components/ImageCard";
 import ProductCard from "@/components/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector((state) => state.product.data);
   const isLoading = useSelector((state) => state.product.status === "loading");
   const [firstCarousal, setFirstCarousal] = useState([]);
@@ -58,9 +60,9 @@ export default function Homepage() {
               firstCarousal
                 .slice(currentIndex, currentIndex + 3)
                 .map((item, idx) => (
-                  <div key={idx} className="w-1/3 p-2">
+                  <div key={idx} className="w-1/3 p-2 cursor-pointer" onClick={()=>navigate("/products/all")}>
                     <img
-                      src={item.images[0]}
+                      src={item.images.at(-1)}
                       alt={item.name}
                       className="w-full h-auto object-contain rounded-md"
                     />
@@ -78,8 +80,8 @@ export default function Homepage() {
               ))
             : // Show ImageCards
               firstCarousal.slice(0, 6).map((item, idx) => (
-                <div key={idx} className="w-1/3 p-2">
-                  <ImageCard image={item.images[0]} name={item.name} />
+                <div key={idx} className="w-1/3 p-2 cursor-pointer" onClick={()=>navigate("/products/Men")}>
+                  <ImageCard image={item.images.at(-1)} name={item.name} />
                 </div>
               ))}
         </div>
@@ -94,8 +96,8 @@ export default function Homepage() {
               ))
             : // Show ImageCards
               firstCarousal.slice(12, 18).map((item, idx) => (
-                <div key={idx} className="w-1/3 p-2">
-                  <ImageCard image={item.images[0]} name={item.name} />
+                <div key={idx} className="w-1/3 p-2 cursor-pointer" onClick={()=>navigate("/products/Women")}>
+                  <ImageCard image={item.images.at(-1)} name={item.name} />
                 </div>
               ))}
         </div>
@@ -117,9 +119,9 @@ export default function Homepage() {
               ))
             : // Show ProductCards
               firstCarousal.slice(12, 18).map((item, idx) => (
-                <div key={idx} className="w-full sm:w-1/2 md:w-1/3 p-2">
+                <div key={idx} className="w-full sm:w-1/2 md:w-1/3 p-2 cursor-pointer" onClick={()=>navigate("/products/Women")}>
                   <ProductCard
-                    image={item.images[0]}
+                    image={item.images.at(-1)}
                     name={item.name}
                     description={item.description}
                     price={item.price}
