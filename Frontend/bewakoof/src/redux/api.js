@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout, refreshToken } from "./reducers/authSlice";
 
 export const api = axios.create({
-    baseURL: "https://bewakoof-lh34.onrender.com/api",
+    baseURL: "http://localhost:8000/api",
     headers: {
         "Content-Type": "application/json",
     },

@@ -6,6 +6,8 @@ import productReducer from "./reducers/productSlice";
 import cartReducer from "./reducers/cartSlice"
 
 
+
+
 const store = configureStore({
   reducer: {
     signup: signupReducer,
@@ -14,7 +16,7 @@ const store = configureStore({
     product : productReducer,
     cart : cartReducer,
   },
-  
+ 
 });
 
 export default store;
