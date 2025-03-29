@@ -14,7 +14,7 @@ import { RiVisaLine, RiMastercardFill } from "react-icons/ri";
 export default function Footer() {
   return (
     <footer className="p-12 bg-[#1c1c1c]">
-      <div className="w-48 mb-5">
+      <div className="w-38 md:48 mb-5">
         <img className="w-full" src={bewakoof} alt="Bewakoof Logo" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
