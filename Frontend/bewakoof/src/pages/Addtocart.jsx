@@ -8,9 +8,9 @@ export default function Addtocart() {
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        dispatch(getCartData())
-    },[])
+    // useEffect(()=>{
+    //     dispatch(getCartData())
+    // },[])
   return (
     <>
     <Navbar />
