@@ -25,7 +25,7 @@ productRoute.post(
 );
 
 productRoute.get("/", getProducts);
-productRoute.get("/:id", auth, access("Admin"), getProductById);
+productRoute.get("/:id", auth, getProductById);
 productRoute.put(
   "/update/:id",
   auth,
